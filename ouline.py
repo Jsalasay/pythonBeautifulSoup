@@ -1,5 +1,6 @@
 #import beautifulsoup and request here
 
+#Jose was here, "My first change"
 
 #function to get job list from url 'https://www.indeed.com/jobs?q={role}&l={location}'
 def getJobList():
