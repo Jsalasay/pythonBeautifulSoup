@@ -1,5 +1,7 @@
 #import beautifulsoup and request here
+from urllib import response
 from bs4 import BeautifulSoup;
+
 import requests;
 import json;
 from flask import Flask, render_template;
@@ -23,7 +25,8 @@ def outputJob(jobResult):
 def getJobList(role,location):
     url = ('https://www.indeed.com/jobs?q=%s&l=%s' % (role, location))
     
-    response = requests.request("GET", url, headers = {}, data = {})
+    #response = requests.request("GET", url, headers = {}, data = {})
+    response = requests.get(url)
     htmlDoc = response.text
     soup = BeautifulSoup(htmlDoc, 'html.parser')
     jobList = []
@@ -70,10 +73,9 @@ def saveDataInJSON(jobDetails):
 
 #main function
 def main():
-    # Write a code here to get job location and role from user e.g. role = input()
     print("Enter role you want to search")
     role = input()
-    print("Enter location you want to search")
+    print("Enter location")
     location = input()
     print('Role: %s, Location: %s' % (role, location))
     print("\n")
