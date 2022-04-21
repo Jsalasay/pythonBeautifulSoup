@@ -2,8 +2,16 @@
 from bs4 import BeautifulSoup;
 import requests;
 import json;
+from flask import Flask, render_template;
 
-def displayJobDetails(jobResult):
+app = Flask(__name__)
+@app.route("/")
+def displayJobDetails():
+    response = requests.get('https://raw.githubusercontent.com/Jsalasay/pythonBeautifulSoup/xaviersWork/jobDetails.json')
+    responseJSON = json.loads(json.dumps(response.json()))
+    return render_template('index.html', responseJSON=responseJSON)
+
+def outputJob(jobResult):
     #data output
     print("====JOB FOUND====")
     print("Title: %s\nCompany: %s\nSalary: %s\nDescription:" % (jobResult['title'], jobResult['company'], jobResult['salary']))
@@ -72,8 +80,10 @@ def main():
     
     jobList = getJobList(role, location);
     saveDataInJSON(jobList);
-    for job in jobList:
-        displayJobDetails(job);
+    displayJobDetails();
+    #for job in jobList:
+        #outputJob(job);
     
 if __name__ == '__main__':
-    main()
+    app.run(host='127.0.0.1', port=8000, debug=True)
+    displayJobDetails()

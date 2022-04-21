@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+
+    <body>
+        
+        <h1>Job Details:</h1>
+
+        <ul class = "job-list">
+            {% for job in responseJSON %}
+            <li class = "job-list-item">
+                <div class = "job-box">
+                    <h3>Title: {{job.title}}</h3>
+                    <h4>Company: {{job.company}}</h4>
+                    <h4>Description:</h4>
+                    <ul class = "description-list">
+                        {% for desc in job.description %}
+                        <li>
+                            {{desc}}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <h4>Salary: {{job.salary}}</h4>
+                </div>
+            </li>
+            <br>
+            {% endfor %}
+        </ul>
+
+    </body>
+
+</html>
