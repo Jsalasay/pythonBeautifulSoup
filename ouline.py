@@ -1,19 +1,23 @@
 #import beautifulsoup and request here
 from urllib import response
 from bs4 import BeautifulSoup;
+from flask import Flask, render_template;
 
 import requests;
 import json;
-from flask import Flask, render_template;
 
 app = Flask(__name__)
 @app.route("/")
 def displayJobDetails():
-    response = requests.get('https://raw.githubusercontent.com/Jsalasay/pythonBeautifulSoup/xaviersWork/jobDetails.json')
-    responseJSON = json.loads(json.dumps(response.json()))
-    return render_template('index.html', responseJSON=responseJSON)
+    
+    #write a code to give call to json file and then render html page
+    response = requests.get('https://raw.githubusercontent.com/Jsalasay/pythonBeautifulSoup/main/jobDetails.json')
+    #responseJSON = json.loads(json.dumps(response.json()))
+    responseJSON = json.loads(response.text)
+    return render_template('index.html',responseJSON = responseJSON)
 
-def outputJob(jobResult):
+
+def displayJobDetails(jobResult):
     #data output
     print("====JOB FOUND====")
     print("Title: %s\nCompany: %s\nSalary: %s\nDescription:" % (jobResult['title'], jobResult['company'], jobResult['salary']))
@@ -77,15 +81,13 @@ def main():
     role = input()
     print("Enter location")
     location = input()
-    print('Role: %s, Location: %s' % (role, location))
-    print("\n")
-    
-    jobList = getJobList(role, location);
-    saveDataInJSON(jobList);
-    displayJobDetails();
-    #for job in jobList:
-        #outputJob(job);
+    print('Role" %s, Location: %s \n'%(role,location))
+
+    jobList = getJobList(role,location)
+    saveDataInJSON(jobList)
+    for job in jobList:
+        displayJobDetails(job)
     
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=8000, debug=True)
+    app.run(host='127.0.01', port=8000, debug=True)
     displayJobDetails()
